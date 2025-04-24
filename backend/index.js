@@ -70,11 +70,12 @@ const protect = (req, res, next) => {
 };
 
 // routing | register the route
+app.use("/register", require("./src/users/route"));
+
 app.use("/user", protect, require("./src/users/route"));
 app.use("/item", protect, require("./src/items/route"));
 app.use("/log", protect, require("./src/logs/route"));
 app.use(require("./src/auth/route"));
-app.use("/register", protect, require("./src/users/route"));
 
 // start server
 app.listen(PORT, () => {

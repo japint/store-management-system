@@ -2,39 +2,62 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function App() {
-  const [name, setName] = useState("");
-  const [home, setHome] = useState("");
+  const [form, setForm] = useState({ uid: "", password: "", name: "" });
+  const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    axios.get("http://localhost:4000/home").then(function (response) {
-      setHome(response.data);
-    });
-  }, []);
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-  const postName = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      await axios.post("http://localhost:4000/post_name", {
-        name,
-      });
-      console.log("Name sent successfully!");
-    } catch (error) {
-      console.log("Error sending name:", error);
+      const res = await axios.post("http://localhost:4000/user/register", form);
+      setMessage(res.data);
+    } catch (err) {
+      setMessage(err.response?.data || "Error registering");
     }
   };
 
   return (
-    <div>
-      <form onSubmit={postName}>
+    <div style={{ padding: "2rem", fontFamily: "Arial" }}>
+      <h2>Register</h2>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+          maxWidth: 300,
+        }}
+      >
         <input
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          name="uid"
+          placeholder="Username"
+          value={form.uid}
+          onChange={handleChange}
+          required
         />
-        <button type="submit">Send name</button>
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={form.password}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          value={form.name}
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">Register</button>
       </form>
-      {home}
+      {message && <p style={{ marginTop: "1rem" }}>{message}</p>}
     </div>
   );
 }
