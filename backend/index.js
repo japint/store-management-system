@@ -57,12 +57,12 @@ const privateKey = "qwerty";
 const protect = (req, res, next) => {
   try {
     const token = req.headers.authorization;
-    const decoded = jwt.verify(token, privateKey);
-    console.log(decoded);
-    if (!decoded?.sub) {
+    const verify = jwt.verify(token, privateKey);
+    console.log(verify);
+    if (!verify?.sub) {
       return res.status(403).send("unauthorized");
     }
-    req.user = decoded;
+    req.user = verify;
     next();
   } catch (err) {
     res.status(403).send("unauthorized");
@@ -74,6 +74,7 @@ app.use("/user", protect, require("./src/users/route"));
 app.use("/item", protect, require("./src/items/route"));
 app.use("/log", protect, require("./src/logs/route"));
 app.use(require("./src/auth/route"));
+app.use("/register", protect, require("./src/users/route"));
 
 // start server
 app.listen(PORT, () => {

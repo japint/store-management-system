@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt");
+
 class UserService {
   constructor(context) {
     /** @type {{ userStore: import('./store'), logStore: import('../logs/store') }} */
@@ -5,6 +7,31 @@ class UserService {
     this.userStore = userStore;
     this.logStore = logStore;
   }
+
+  async register({ uid, password, name }) {
+    if (!uid || !password || !name) {
+      throw new Error("uid, password and name are required");
+    }
+
+    const existingUser = await this.userStore.getUserByUid(uid);
+    if (existingUser) {
+      throw new Error("User already exists");
+    }
+
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    await this.userStore.createUser({ uid, pw: hashedPassword, name });
+
+    return {
+      message: "User registered successfully",
+      user: {
+        uid,
+        name,
+      },
+    };
+  }
+
   async get(id) {
     return await this.userStore.get(id);
   }

@@ -1,12 +1,23 @@
 // import
 const express = require("express");
+const bcrypt = require("bcrypt");
 
 // instantiation
 const app = express.Router();
 
 // routes/endpoints
 
-// list
+// register endpoint
+app.post("/register", async (req, res) => {
+  try {
+    const result = await req.context.userService.register(req.body);
+    res.status(201).send(result.message);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+});
+
+// list users
 app.get("/", async (req, res) => {
   const user = await req.context.userStore.list();
   res.send(user);
