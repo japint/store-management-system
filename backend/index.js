@@ -52,14 +52,21 @@ app.use((req, res, next) => {
 });
 
 // protect middleware
+const privateKey = "qwerty";
+
 const protect = (req, res, next) => {
-  const data = jwt.decode(req.headers.authorization);
-  console.log(data);
-  if (!data?.sub) {
+  try {
+    const token = req.headers.authorization;
+    const decoded = jwt.verify(token, privateKey);
+    console.log(decoded);
+    if (!decoded?.sub) {
+      return res.status(403).send("unauthorized");
+    }
+    req.user = decoded;
+    next();
+  } catch (err) {
     res.status(403).send("unauthorized");
-    return;
   }
-  next();
 };
 
 // routing | register the route
