@@ -43,7 +43,7 @@ function App() {
           type="password"
           name="pw"
           placeholder="Password"
-          value={form.password}
+          value={form.pw}
           onChange={handleChange}
           required
         />
