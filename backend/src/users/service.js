@@ -8,18 +8,19 @@ class UserService {
     this.logStore = logStore;
   }
 
-  async register({ uid, password, name }) {
-    if (!uid || !password || !name) {
+  // register
+  async register({ uid, pw, name }) {
+    if (!uid || !pw || !name) {
       throw new Error("uid, password and name are required");
     }
 
-    const existingUser = await this.userStore.getUserByUid(uid);
+    const existingUser = await this.userStore.getUserByName(name);
     if (existingUser) {
       throw new Error("User already exists");
     }
 
     const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const hashedPassword = await bcrypt.hash(pw, saltRounds);
 
     await this.userStore.createUser({ uid, pw: hashedPassword, name });
 

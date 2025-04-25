@@ -3,6 +3,34 @@ class UserStore {
     this.db = db;
   }
 
+  // register
+  async getUserByName(name) {
+    return new Promise((resolve, reject) => {
+      this.db.query(
+        "SELECT * FROM users WHERE name = ?",
+        [name],
+        (err, rows) => {
+          if (err) return reject(err);
+          resolve(rows[0]);
+        }
+      );
+    });
+  }
+
+  async createUser({ uid, pw, name }) {
+    return new Promise((resolve, reject) => {
+      this.db.query(
+        "INSERT INTO users (uid, pw, name) VALUES (?, ?, ?)",
+        [uid, pw, name],
+        (err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+          console.log("User insert result:", result); // delete
+        }
+      );
+    });
+  }
+
   // list/get
   async list() {
     return await new Promise((resolve) => {
@@ -88,30 +116,6 @@ class UserStore {
   }
 
   hello() {}
-
-  // register
-
-  async getUserByUid(uid) {
-    return new Promise((resolve, reject) => {
-      this.db.query("SELECT * FROM users WHERE uid = ?", [uid], (err, rows) => {
-        if (err) return reject(err);
-        resolve(rows[0]);
-      });
-    });
-  }
-
-  async createUser({ uid, pw, name }) {
-    return new Promise((resolve, reject) => {
-      this.db.query(
-        "INSERT INTO users (uid, pw, name) VALUES (?, ?, ?)",
-        [uid, pw, name],
-        (err, result) => {
-          if (err) return reject(err);
-          resolve(result);
-        }
-      );
-    });
-  }
 }
 
 module.exports = UserStore;
