@@ -3,7 +3,7 @@ class UserStore {
     this.db = db;
   }
 
-  // register
+  // register a user
   async getUserByName(name) {
     return new Promise((resolve, reject) => {
       this.db.query(
@@ -30,6 +30,8 @@ class UserStore {
       );
     });
   }
+
+  // login
 
   // list/get
   async list() {

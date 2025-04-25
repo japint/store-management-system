@@ -20,6 +20,7 @@ app.post("/login", async (req, res) => {
   if (!match) return res.status(403).send("Invalid password");
   // const token = jwt.sign({ sub: user.uid }, privateKey);
   const token = jwt.sign({ sub: user.id }, privateKey);
+
   console.log(token);
   res.send({ token });
 });

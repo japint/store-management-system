@@ -56,23 +56,24 @@ const privateKey = "qwerty";
 
 const protect = (req, res, next) => {
   try {
-    const token = req.headers.authorization;
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(" ")[1]; // check
+    if (!token) return res.status(401).send("No token provided");
+
     const verify = jwt.verify(token, privateKey);
-    console.log(verify);
     if (!verify?.sub) {
-      return res.status(403).send("unauthorized");
+      return res.status(403).send("Unauthorized");
     }
     req.user = verify;
     next();
   } catch (err) {
-    res.status(403).send("unauthorized");
+    res.status(403).send("Unauthorized");
   }
 };
 
 // routing | register the route
-app.use("/register", require("./src/users/route"));
+app.use("/user", require("./src/users/route"));
 
-app.use("/user", protect, require("./src/users/route"));
 app.use("/item", protect, require("./src/items/route"));
 app.use("/log", protect, require("./src/logs/route"));
 app.use(require("./src/auth/route"));

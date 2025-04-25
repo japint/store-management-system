@@ -1,4 +1,6 @@
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const SECRET_KEY = process.env.JWT_SECRET || "your_secret";
 
 class UserService {
   constructor(context) {
@@ -32,6 +34,20 @@ class UserService {
       },
     };
   }
+
+  // login
+  // async login({ name, pw }) {
+  //   const user = await this.userStore.getUserByName(name);
+  //   if (!user) throw new Error("Invalid credentials");
+
+  //   const isMatch = await bcrypt.compare(pw, user.pw);
+  //   if (!isMatch) throw new Error("Invalid credentials");
+
+  //   const payload = { uid: user.uid, name: user.name };
+  //   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
+
+  //   return token;
+  // }
 
   async get(id) {
     return await this.userStore.get(id);

@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 function App() {
-  const [form, setForm] = useState({ uid: "", password: "", name: "" });
+  const [form, setForm] = useState({ uid: "", pw: "", name: "" });
   const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
@@ -41,7 +41,7 @@ function App() {
         />
         <input
           type="password"
-          name="password"
+          name="pw"
           placeholder="Password"
           value={form.password}
           onChange={handleChange}
