@@ -32,6 +32,18 @@ class UserStore {
   }
 
   // login
+  async getUserByName(name) {
+    return new Promise((resolve, reject) => {
+      this.db.query(
+        "SELECT * FROM users WHERE name = ?",
+        [name],
+        (err, rows) => {
+          if (err) return reject(err);
+          resolve(rows[0]);
+        }
+      );
+    });
+  }
 
   // list/get
   async list() {

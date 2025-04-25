@@ -18,16 +18,6 @@ app.post("/register", async (req, res) => {
   }
 });
 
-// login
-// app.post("/login", async (req, res) => {
-//   try {
-//     const token = await req.context.userService.login(req.body);
-//     res.status(200).send({ token });
-//   } catch (error) {
-//     res.status(401).send(err.message);
-//   }
-// });
-
 // list users
 app.get("/", async (req, res) => {
   const user = await req.context.userStore.list();
