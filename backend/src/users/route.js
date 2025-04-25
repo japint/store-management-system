@@ -1,6 +1,5 @@
 // import
 const express = require("express");
-const bcrypt = require("bcrypt");
 
 // instantiation
 const app = express.Router();

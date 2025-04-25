@@ -8,7 +8,7 @@ const app = express.Router();
 const privateKey = "qwerty";
 
 // routes/endpoints
-app.post("/authorize", async (req, res) => {
+app.post("/login", async (req, res) => {
   //   TODO: validation if !user exist throw error
   // const token = jwt.sign({ sub: user.uid }, privateKey);
   const token = jwt.sign({ sub: req.body.uid }, privateKey);
