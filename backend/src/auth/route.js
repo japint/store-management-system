@@ -10,22 +10,25 @@ const privateKey = "qwerty";
 
 // login endpoint
 app.post("/login", async (req, res) => {
-  const { name, pw } = req.body;
+  const { username, pw } = req.body;
+  console.log("Login attempt username:", username); // Log username sent in request
   try {
     //   TODO: validation if !user exist throw error
     // find the user in DB by uid
-    const user = await req.context.userStore.getUserByName(name);
-    if (!user) return res.status(401).send("User not found");
+    const user = await req.context.userStore.getUserByName(username);
+
+    if (!user) return res.status(401).send("Invalid username or password");
+    false;
 
     const match = await bcrypt.compare(pw, user.pw);
     if (!match) return res.status(403).send("Invalid password");
     // const token = jwt.sign({ sub: user.uid }, privateKey);
-    const token = jwt.sign({ sub: user.id }, privateKey, { expiresIn: "30d" });
+    const token = jwt.sign({ sub: user.uid }, privateKey, { expiresIn: "30d" });
     res.send({
       token,
       user: {
         uid: user.uid,
-        name: user.name,
+        username: user.username,
       },
     });
   } catch (err) {

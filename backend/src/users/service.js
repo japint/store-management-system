@@ -11,12 +11,12 @@ class UserService {
   }
 
   // register
-  async register({ uid, pw, name }) {
-    if (!uid || !pw || !name) {
-      throw new Error("uid, password and name are required");
+  async register({ name, pw, username }) {
+    if (!name || !pw || !username) {
+      throw new Error("name, password and username are required");
     }
 
-    const existingUser = await this.userStore.getUserByName(name);
+    const existingUser = await this.userStore.getUserByName(username);
     if (existingUser) {
       throw new Error("User already exists");
     }
@@ -24,12 +24,17 @@ class UserService {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(pw, saltRounds);
 
-    await this.userStore.createUser({ uid, pw: hashedPassword, name });
+    const { uid } = await this.userStore.createUser({
+      name,
+      pw: hashedPassword,
+      username,
+    });
 
     return {
       message: "User registered successfully",
       user: {
         uid,
+        username,
         name,
       },
     };
