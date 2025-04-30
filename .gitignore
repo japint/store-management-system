@@ -1,18 +1,18 @@
+# Ignore frontend .env
+frontend/.env
+
+# Ignore backend .env
+backend/.env
+
 # Node modules
 node_modules/
 
 # Logs
-logs/
 *.log
+
+# npm-debug.log
 npm-debug.log*
 
-# Environment variables
-.env
-
-# OS-specific files
-.DS_Store
-Thumbs.db
-
-# Optional: Build outputs
-dist/
-build/node_modules/
+# IDE specific files
+.vscode/
+.idea/
