@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 
 function App() {
-  const [form, setForm] = useState({ uid: "", pw: "", name: "" });
+  const [form, setForm] = useState({ name: "", pw: "", username: "" });
   const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
@@ -33,9 +33,9 @@ function App() {
       >
         <input
           type="text"
-          name="uid"
-          placeholder="Username"
-          value={form.uid}
+          name="name"
+          placeholder="Full Name"
+          value={form.name}
           onChange={handleChange}
           required
         />
@@ -49,15 +49,45 @@ function App() {
         />
         <input
           type="text"
-          name="name"
-          placeholder="Full Name"
-          value={form.name}
+          name="username"
+          placeholder="Username"
+          value={form.username}
           onChange={handleChange}
           required
         />
         <button type="submit">Register</button>
       </form>
+
       {message && <p style={{ marginTop: "1rem" }}>{message}</p>}
+
+      <h2>Log In</h2>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+          maxWidth: 300,
+        }}
+      >
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={form.username}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="pw"
+          placeholder="Password"
+          value={form.pw}
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">Register</button>
+      </form>
     </div>
   );
 }
