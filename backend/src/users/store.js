@@ -97,7 +97,7 @@ class UserStore {
     return await this.get(id);
   }
 
-  // update v1
+  // update
   async update(uid, user) {
     const { name, username, pw } = user;
 
@@ -120,54 +120,6 @@ class UserStore {
 
     return { ...user, uid: uid };
   }
-
-  // update v2
-  // async update(uid, user) {
-  //   console.log({ uid, user });
-  //   const { name, username, pw } = user;
-
-  //   return new Promise((resolve, reject) => {
-  //     const values = [];
-  //     let query = "UPDATE users SET";
-  //     const fields = [];
-
-  //     // Always update name
-  //     fields.push(" name = ?");
-  //     values.push(name);
-
-  //     // Conditionally update username
-  //     if (username) {
-  //       fields.push(" username = ?");
-  //       values.push(username);
-  //     }
-
-  //     // Conditionally update password
-  //     const finalize = (finalValues) => {
-  //       query += fields.join(",");
-  //       query += " WHERE uid = ?";
-  //       finalValues.push(uid);
-
-  //       this.db.query(query, finalValues, (err, rows, fields) => {
-  //         if (err) return reject(err);
-  //         resolve({ ...user, itemid: uid });
-  //       });
-  //     };
-
-  //     // If password update is needed, hash it first
-  //     if (pw) {
-  //       const bcrypt = require("bcrypt");
-  //       const saltRounds = 10;
-  //       bcrypt.hash(pw, saltRounds, (err, hashedPassword) => {
-  //         if (err) return reject(err);
-  //         fields.push(" pw = ?");
-  //         values.push(hashedPassword);
-  //         finalize(values);
-  //       });
-  //     } else {
-  //       finalize(values);
-  //     }
-  //   });
-  // }
 
   // delete
   async delete(id) {
