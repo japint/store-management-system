@@ -57,7 +57,37 @@ function App() {
         />
         <button type="submit">Register</button>
       </form>
+
       {message && <p style={{ marginTop: "1rem" }}>{message}</p>}
+
+      <h2>Log In</h2>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+          maxWidth: 300,
+        }}
+      >
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={form.username}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="pw"
+          placeholder="Password"
+          value={form.pw}
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">Register</button>
+      </form>
     </div>
   );
 }
