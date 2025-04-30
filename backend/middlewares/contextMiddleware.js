@@ -19,7 +19,7 @@ const contextMiddleware = (req, res, next) => {
 
   connection.connect((err) => {
     if (err) {
-      console.error("❌ DB connection failed:");
+      console.error("DB connection failed:");
       console.error(err.code); // Like ER_ACCESS_DENIED_ERROR
       console.error(err.sqlMessage);
       return res.status(500).send("DB connection error");
