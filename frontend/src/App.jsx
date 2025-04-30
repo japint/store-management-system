@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 
 function App() {
-  const [form, setForm] = useState({ uid: "", pw: "", name: "" });
+  const [form, setForm] = useState({ name: "", pw: "", username: "" });
   const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
@@ -33,9 +33,9 @@ function App() {
       >
         <input
           type="text"
-          name="uid"
-          placeholder="Username"
-          value={form.uid}
+          name="name"
+          placeholder="Full Name"
+          value={form.name}
           onChange={handleChange}
           required
         />
@@ -49,9 +49,9 @@ function App() {
         />
         <input
           type="text"
-          name="name"
-          placeholder="Full Name"
-          value={form.name}
+          name="username"
+          placeholder="Username"
+          value={form.username}
           onChange={handleChange}
           required
         />
